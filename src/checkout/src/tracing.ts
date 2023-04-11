@@ -1,6 +1,4 @@
-import {
-  CompositePropagator,
-} from '@opentelemetry/core';
+import { CompositePropagator } from '@opentelemetry/core';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { B3InjectEncoding, B3Propagator } from '@opentelemetry/propagator-b3';
@@ -14,13 +12,12 @@ import { envDetector } from '@opentelemetry/resources';
 const otelSDK = new NodeSDK({
   traceExporter: new OTLPTraceExporter(),
   spanProcessor: new SimpleSpanProcessor(
-    new OTLPTraceExporter()
-  ),
+new OTLPTraceExporter()),
   contextManager: new AsyncLocalStorageContextManager(),
   resourceDetectors: [
     envDetector,
     awsEc2Detector,
-  ],
+ ],
   textMapPropagator: new CompositePropagator({
     propagators: [
       new B3Propagator(),
