@@ -17,6 +17,7 @@
  */
 
 import otelSDK from './tracing';
+import xraySDK from './xraytrace';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -25,7 +26,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   // Start SDK before nestjs factory create
   await otelSDK.start();
-  
+  await xraySDK.start();
+
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
