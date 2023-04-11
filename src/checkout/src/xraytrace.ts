@@ -37,8 +37,11 @@ export default xraySDK;
 
 // gracefully shut down the SDK on process exit
 process.on('SIGTERM', () => {
-  xraySDK.shutdown()
-    .then(() => console.log('Tracing and Metrics terminated'))
-    .catch((error) => console.log('Error terminating tracing and metrics', error))
+  xraySDK
+    .shutdown()
+    .then(
+      () => console.log('Tracing and Metrics terminated'),
+      (err) => console.log('Error terminating tracing and metrics', err),
+    )
     .finally(() => process.exit(0));
 });
