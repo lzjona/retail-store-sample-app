@@ -19,6 +19,7 @@ const _tracerConfig = {
   idGenerator: new AWSXRayIdGenerator(),
 };
 
+
 const xraySDK = new opentelemetry.NodeSDK({
   textMapPropagator: new AWSXRayPropagator(),
   instrumentations: [

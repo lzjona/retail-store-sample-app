@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@narando/nest-xray": "^2.1.0",
     "@nestjs/common": "^9.3.10",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.3.10",
@@ -32,9 +33,11 @@
     "@opentelemetry/id-generator-aws-xray": "^1.1.1",
     "@opentelemetry/instrumentation-aws-sdk": "^0.34.0",
     "@opentelemetry/instrumentation-http": "^0.37.0",
+    "@opentelemetry/instrumentation-nestjs-core": "^0.32.2",
     "@opentelemetry/resource-detector-aws": "^1.2.1",
     "@opentelemetry/sdk-node": "^0.34.0",
     "@willsoto/nestjs-prometheus": "^4.7.0",
+    "aws-xray-sdk": "^3.5.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "nestjs-otel": "^5.0.0",

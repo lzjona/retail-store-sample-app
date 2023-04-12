@@ -25,6 +25,7 @@ import { CheckoutModule } from './checkout/checkout.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { OpenTelemetryModule } from 'nestjs-otel';
+import { TracingModule } from "@narando/nest-xray";
 
 const OpenTelemetryModuleConfig = OpenTelemetryModule.forRoot({
   
@@ -39,6 +40,7 @@ const OpenTelemetryModuleConfig = OpenTelemetryModule.forRoot({
     PrometheusModule.register(),
     CheckoutModule,
     OpenTelemetryModuleConfig,
+    TracingModule.forRoot({ serviceName: 'CheckOut' }),
   ],
   controllers: [AppController],
   providers: [],

@@ -8,16 +8,19 @@ import * as process from 'process';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
 import { awsEc2Detector } from '@opentelemetry/resource-detector-aws';
 import { envDetector } from '@opentelemetry/resources';
+import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
+
+const _traceExporter = new OTLPTraceExporter();
+const _spanProcessor = new SimpleSpanProcessor(_traceExporter);
+const _tracerConfig = {
+  idGenerator: new AWSXRayIdGenerator(),
+};
 
 const otelSDK = new NodeSDK({
-  traceExporter: new OTLPTraceExporter(),
-  spanProcessor: new SimpleSpanProcessor(
-new OTLPTraceExporter()),
+  traceExporter: _traceExporter,
+  spanProcessor: _spanProcessor,
   contextManager: new AsyncLocalStorageContextManager(),
-  resourceDetectors: [
-    envDetector,
-    awsEc2Detector,
- ],
+  resourceDetectors: [envDetector, awsEc2Detector],
   textMapPropagator: new CompositePropagator({
     propagators: [
       new B3Propagator(),
@@ -28,6 +31,8 @@ new OTLPTraceExporter()),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
 });
+
+otelSDK.configureTracerProvider(_tracerConfig, _spanProcessor);
 
 export default otelSDK;
 
